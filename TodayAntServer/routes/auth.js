@@ -1,0 +1,186 @@
+var express = require('express');
+var router = express.Router();
+var {User} = require('../models');
+var bcrypt = require('bcryptjs');
+var crypto = require('crypto'); 
+const jwt = require('jsonwebtoken');
+var passport = require('passport');
+
+var isEmpty = function (value) {
+    if (value == "" || value == null || value == undefined || (value != null && typeof value == "object" && !Object.keys(value).length)) {
+        return true
+    } else {
+        return false
+    }
+};
+
+router.post('/login', function(req, res, next) {
+    try{
+        passport.authenticate('local', {session : false}, async (authError, user, info) => {
+            if(authError)
+            {
+                console.log(authError);
+                console.error(authError);
+                return next(authError);
+            }
+
+            if (!user) 
+            {
+                console.log(info.message);
+                return res.json({
+                    code:400,
+                    message:info.message
+                });
+            }
+
+            try{
+                var expiresTime;
+                if(user.status==0)
+                    expiresTime='60m';
+                else
+                    expiresTime='1440m'
+                
+                const token = jwt.sign(
+                    {
+                        email : user.email,
+                        nickname : user.nickname,
+                        gender : user.gender,
+                        age : age,
+                        status : user.status,
+                    },
+                    process.env.JWT_SECRET,
+                    {
+                        expiresIn : expiresTime,
+                        issuer : 'comeOn',
+                    }
+                );
+                
+                const refreshtoken = jwt.sign(
+                    { email : user.email },
+                    process.env.JWT_SECRET,
+                    {
+                        expiresIn : '1440m',
+                        issuer : 'comeOn',
+                    }
+                );
+                
+                User.update(
+                    { refresh_token: refreshtoken }, 
+                    { where : { email : user.email } }
+                );
+                return res.status(200).json({
+                    code : 200,
+                    message : '토큰이 발급되었습니다.',
+                    token,
+                    refreshtoken,
+                }).send();
+            }
+            catch(err)
+            {
+                console.log(err);
+                return res.status(400).json({
+                    code:400,
+                    message:"에러입니다."
+                }).send();
+            }
+        })(req, res, next); 
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.send("에러입니다.");
+    }
+});
+
+router.post('/join',async function(req, res, next) {
+    var {email,nickname,password,phone_num,gender} = req.body;
+
+    await User.findOne({where:{ email:email }})
+
+    .then(async result=>{
+        if(isEmpty(result)!=false)
+        {
+            var salt = Math.round((new Date().valueOf() * Math.random())) + "";
+            var hashpassword = crypto.createHash('sha512').update(password+salt).digest('base64');
+            await User.create({
+                email:email,
+                nickname:nickname,
+                password:hashpassword,
+                salt:salt,
+                phone_num:phone_num,
+                gender:gender
+            })
+            .then(result=>{
+                res.json({
+                    code:200,
+                    message:"Join Success"
+                });
+            })
+        }
+        else
+        {
+            return res.status(400).send("이미 가입된 메일입니다.");
+        }
+    });
+});
+
+router.post('/getNewToken',function(req,res,next){
+    var authorization=req.headers.authorization;
+    var refreshtoken = req.headers.refreshtoken;
+    var tokenValue=jwt.decode(authorization);
+    var email = tokenValue.email;
+
+    User.findOne( { where : { email: email } })
+
+    .then( user => 
+    {
+        if(isEmpty(result))
+        {
+            res.json({
+                code:400,
+                message:"토큰이 만료되었습니다. 재 로그인 해주세요."
+            });
+        }
+        else if(result==refreshtoken)
+        {
+            var expiresTime;
+
+            if(tokenValue.status==0)
+                expiresTime='60m';
+            else
+                expiresTime='1440m'
+            
+            const token = jwt.sign(
+                {
+                    email : tokenValue.email,
+                    nickname : tokenValue.nickname,
+                    gender : tokenValue.gender,
+                    age : tokenValue.age,
+                    status : tokenValue.status,
+                },
+                process.env.JWT_SECRET,
+                {
+                    expiresIn : expiresTime,
+                    issuer : 'comeOn',
+                }
+            );
+            
+            res.status(200).json({
+                code : 200,
+                message : '토큰이 발급되었습니다.',
+                token,
+            }).send();  
+
+        }
+        else
+        {    
+            res.json({
+                code:500,
+                message:"토큰이 변조되었습니다. 재 로그인 해주세요."
+            });
+        }
+    });
+});
+
+
+module.exports = router;
