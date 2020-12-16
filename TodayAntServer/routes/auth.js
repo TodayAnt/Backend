@@ -1,12 +1,12 @@
-var express = require('express');
-var router = express.Router();
-var {User} = require('../models');
-var bcrypt = require('bcryptjs');
-var crypto = require('crypto'); 
+const express = require('express');
+const router = express.Router();
+const {User} = require('../models');
+const bcrypt = require('bcryptjs');
+const crypto = require('crypto'); 
 const jwt = require('jsonwebtoken');
-var passport = require('passport');
+const passport = require('passport');
 
-var isEmpty = function (value) {
+const isEmpty = function (value) {
     if (value == "" || value == null || value == undefined || (value != null && typeof value == "object" && !Object.keys(value).length)) {
         return true
     } else {
@@ -42,10 +42,10 @@ router.post('/login', function(req, res, next) {
                 
                 const token = jwt.sign(
                     {
+                        uid : user.id,
                         email : user.email,
                         nickname : user.nickname,
                         gender : user.gender,
-                        age : age,
                         status : user.status,
                     },
                     process.env.JWT_SECRET,
@@ -68,12 +68,9 @@ router.post('/login', function(req, res, next) {
                     { refresh_token: refreshtoken }, 
                     { where : { email : user.email } }
                 );
-                return res.status(200).json({
-                    code : 200,
-                    message : '토큰이 발급되었습니다.',
-                    token,
-                    refreshtoken,
-                }).send();
+
+                res.cookie('token', token, { httpOnly: true });
+                return res.redirect('/');
             }
             catch(err)
             {
@@ -134,14 +131,14 @@ router.post('/getNewToken',function(req,res,next){
 
     .then( user => 
     {
-        if(isEmpty(result))
+        if(isEmpty(user))
         {
             res.json({
                 code:400,
                 message:"토큰이 만료되었습니다. 재 로그인 해주세요."
             });
         }
-        else if(result==refreshtoken)
+        else if(user.refresh_token == refreshtoken)
         {
             var expiresTime;
 
@@ -152,6 +149,7 @@ router.post('/getNewToken',function(req,res,next){
             
             const token = jwt.sign(
                 {
+                    uid : user.user_id,
                     email : tokenValue.email,
                     nickname : tokenValue.nickname,
                     gender : tokenValue.gender,
@@ -165,16 +163,18 @@ router.post('/getNewToken',function(req,res,next){
                 }
             );
             
-            res.status(200).json({
+            res.cookie('token', token, { httpOnly: true });
+
+            res.send('main',{
                 code : 200,
                 message : '토큰이 발급되었습니다.',
                 token,
-            }).send();  
+            }); 
 
         }
         else
         {    
-            res.json({
+            res.json('index',{
                 code:500,
                 message:"토큰이 변조되었습니다. 재 로그인 해주세요."
             });

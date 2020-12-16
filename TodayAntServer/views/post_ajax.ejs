@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+   <head>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script>
+         $(document).ready(function(){
+
+            $('#getMethod').click(function() {
+               var get = 'GET METHOD CALL';
+                //Ajax GET Method TEST
+                $.ajax({
+                      url: '/api/posts',
+                      dataType: 'json',
+                      type: 'GET',
+                      data: {data:get},
+                      success: function(result) {
+                          console.log(result.posts);
+                          if (result) {
+                            $('#get_output').html(result.posts);
+                          }
+                     }
+                  });
+            });
+
+         });
+ 
+      </script>
+      <style media="screen">
+        div{
+          text-align: center;
+        }
+      </style>
+   </head>
+   <body>
+         <h1>Ajax 기본 테스트</h1>
+         <div style="border: 3px solid gray; width: 180px;">
+            <h2>Posts</h2>
+            <button id='getMethod'>GET</button>
+            <p id ='get_output'>get</p>
+         </div>
+   </body>
+ 
+</html>

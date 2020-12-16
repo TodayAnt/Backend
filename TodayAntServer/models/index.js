@@ -19,11 +19,17 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.User = require('./user')(sequelize, Sequelize);
+db.Gauth = require('./gauth')(sequelize, Sequelize);
 db.Interest = require('./interest')(sequelize, Sequelize);
 db.Post = require('./post')(sequelize, Sequelize);
-db.keyword = require('./keyword')(sequelize, Sequelize);
+db.Keyword = require('./keyword')(sequelize, Sequelize);
 
 // Model간 관계
+//User-Gauth(N:1)     user_id-id
+db.User.hasOne(db.Gauth, { foreignKey: 'user_id', sourceKey: 'id'});
+db.Gauth.belongsTo(db.User, { foreignKey: 'user_id', sourceKey: 'id'});
+
+
 //Interest-User(N:1)     user_id-id
 db.User.hasMany(db.Interest, { foreignKey: 'user_id', sourceKey: 'id'});
 db.Interest.belongsTo(db.User, { foreignKey: 'user_id', sourceKey: 'id'});

@@ -16,6 +16,61 @@ module.exports = (sequelize, DataTypes) => {
             type : DataTypes.STRING(30),
             allowNULL : false
         },
+
+        code : {
+            type : DataTypes.STRING(10),
+            allowNULL : false
+        },
+
+        keyword1 : {
+            type : DataTypes.STRING(45),
+            allowNULL : true
+        },
+
+        keyword2 : {
+            type : DataTypes.STRING(45),
+            allowNULL : true
+        },
+
+        keyword3 : {
+            type : DataTypes.STRING(45),
+            allowNULL : true
+        },
+
+        keyword4 : {
+            type : DataTypes.STRING(45),
+            allowNULL : true
+        },
+
+        keyword5 : {
+            type : DataTypes.STRING(45),
+            allowNULL : true
+        },
+
+        keyword6 : {
+            type : DataTypes.STRING(45),
+            allowNULL : true
+        },
+
+        keyword7 : {
+            type : DataTypes.STRING(45),
+            allowNULL : true
+        },
+
+        keyword8 : {
+            type : DataTypes.STRING(45),
+            allowNULL : true
+        },
+
+        keyword9 : {
+            type : DataTypes.STRING(45),
+            allowNULL : true
+        },
+
+        keyword10 : {
+            type : DataTypes.STRING(45),
+            allowNULL : true
+        },
     },
     
         {
