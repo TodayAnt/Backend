@@ -17,6 +17,12 @@ module.exports = (sequelize, DataTypes) => {
             allowNULL : false
         },
 
+        keyword_num : {
+            type : DataTypes.INTEGER,
+            allowNULL : false,
+            defaultValue : 0
+        },
+
         headline : {
             type : DataTypes.STRING(100),
             allowNULL : false

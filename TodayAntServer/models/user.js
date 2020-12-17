@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
             unique : true,
         },
 
-        snsId : {
+        gmail : {
             type : DataTypes.STRING(30),
             allowNull : true,
         },
