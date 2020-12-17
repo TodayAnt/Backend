@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/banner.css">
+    <title>고웹의 노예들</title>
+    </script>
+    <script defer src="/js/banner.js" ></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script>
+        let makeTable = ( post ) => {
+            let table = document.getElementById('post_body');
+
+            let table_row = table.insertRow( table.rows.length ); // 하단에 추가
+            let upload_time = table_row.insertCell(0);
+            let fluct = table_row.insertCell(1);
+            let item_keyword = table_row.insertCell(2);
+            let headline = table_row.insertCell(3);
+            let summary = table_row.insertCell(4);
+
+            let main_keyword = "keyword" + posts[i].keyword_num;
+            upload_time.innerHTML = posts[i].upload_time;
+            fluct.innerHTML = posts[i].fluct;
+            item_keyword.innerHTML = posts[i].interest.item + '/' + posts[i].interest[main_keyword];
+            headline.innerHTML = posts[i].headline;
+            summary.innerHTML = posts[i].summary;
+        };
+    </script>
+    <% makeTable(post);%>
+</head>
+<body>
+    <table id='post'>       
+        <thead>
+            <th>최초 뉴스 발행시간</th>
+            <th>등락률</th>
+            <th>종목 이름/ 키워드</th>
+            <th>헤드라인</th>
+            <th>요약</th>
+            <th>요약</th>
+        </thead>
+        <tbody id='post_body'>
+        </tbody>
+    </table>
+</body>
+</html>

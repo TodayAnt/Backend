@@ -24,6 +24,12 @@ module.exports = (sequelize, DataTypes) => {
             allowNull : true,
         },
 
+        gmail_check : {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0
+        },
+
         password : {
             type : DataTypes.STRING(200),
             allowNull : true,

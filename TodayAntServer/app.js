@@ -10,8 +10,6 @@ const passportConfig = require('./passport');
 require('dotenv').config();
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
-var gauthRouter = require('./routes/gauth');
-var mailRouter = require('./routes/mail');
 
 var app = express();
 
@@ -27,8 +25,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
-app.use('/gauth', gauthRouter);
-app.use('/mail', mailRouter);
+//app.use('/gauth', gauthRouter);
+//app.use('/mail', mailRouter);
 passportConfig(passport);
 
 // catch 404 and forward to error handler

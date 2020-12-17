@@ -8,7 +8,7 @@ router.get('/', indexPage);
 
 router.get('/api/posts', postController.getPosts);
 
-router.get('/api/gmail', mailController.sendGmail);
+router.post('/api/gmail', mailController.sendGmail);
 
 module.exports = router;
   

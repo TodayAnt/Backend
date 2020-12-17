@@ -107,6 +107,8 @@ exports.regist = async (req, res, next) => {
             var hashpassword = crypto.createHash('sha512').update(password+salt).digest('base64');
             await User.create({
                 email:email,
+                gmail:gmail,
+                gmail_check: (gmail_check) ? 1:0,
                 nickname:nickname,
                 password:hashpassword,
                 salt:salt,
