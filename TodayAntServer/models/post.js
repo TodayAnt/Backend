@@ -41,7 +41,14 @@ module.exports = (sequelize, DataTypes) => {
 
         cur_price : {
             type : DataTypes.INTEGER,
-            allowNULL : true
+            allowNULL : true,
+            defaultValue : 0
+        },
+
+        fluct : {
+            type : DataTypes.FLOAT,
+            allowNULL : true,
+            defaultValue : 0
         },
     },
     

@@ -13,6 +13,11 @@ exports.getPosts = async (req, res, next) => {
         if(decode)
         {
             const posts = await Post.findAll({
+                include: [{
+                    model: Interest,
+                    attributes: ['item','code','keyword1','keyword2','keyword3','keyword4','keyword5','keyword6','keyword7','keyword8','keyword9','keyword10',],
+                    where: {}
+                }],
                 where: { user_id : decode.uid }
             })
 

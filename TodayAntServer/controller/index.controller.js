@@ -9,10 +9,11 @@ exports.indexPage = (req, res, next) => {
     try 
     {    
         let token = jwt_util.getAccount(req.cookies.token);
+        console.log(token);
         if(token)
         {
             Post.findAll({
-                where: { user_id : decode.uid }
+                where: { user_id : token.uid }
             })
 
             .then( posts => {

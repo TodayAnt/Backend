@@ -4,7 +4,7 @@ exports.getAccount = token => {
     let decode_data; 
     try{ 
         decode_data = jwt.verify(token, process.env.JWT_SECRET); 
-        if(!decode_data.user_id) 
+        if(!decode_data.uid) 
         { 
             decode_data = null; 
         } 
