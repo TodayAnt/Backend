@@ -21,7 +21,6 @@ exports.getPosts = async (req, res, next) => {
                 where: { user_id : decode.uid }
             })
 
-            console.log(posts);
             res.json({"posts" : posts});
         }   
         else

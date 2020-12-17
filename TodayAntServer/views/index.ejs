@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/banner.css">
+    <title>고웹의 노예들</title>
+    </script>
+    <script defer src="/js/banner.js" ></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script>
+        let makeTable = (posts) => {
+            let rows_num = Object.keys(posts).length;
+            let table = document.getElementById('post_body');
+
+            for(let i=0; i < rows_num; i++)
+            {
+                let table_row = table.insertRow( table.rows.length ); // 하단에 추가
+                let upload_time = table_row.insertCell(0);
+                let fluct = table_row.insertCell(1);
+                let item_keyword = table_row.insertCell(2);
+                let headline = table_row.insertCell(3);
+                let summary = table_row.insertCell(4);
+
+                let main_keyword = "keyword" + posts[i].keyword_num;
+                upload_time.innerHTML = posts[i].upload_time;
+                fluct.innerHTML = posts[i].fluct;
+                item_keyword.innerHTML = posts[i].interest.item + '/' + posts[i].interest[main_keyword];
+                headline.innerHTML = posts[i].headline;
+                summary.innerHTML = posts[i].summary;
+            }
+        }
+
+        $(document).ready(function(){
+            var get = 'GET METHOD CALL';
+            function ajaxTable() {
+                console.log('ajax func start');
+                $.ajax({
+                    url: '/api/posts',
+                    dataType: 'json',
+                    type: 'GET',
+                    data: {data:get},
+                    success: function(result) {
+                        if (result) {
+                            //테이블에 데이터 넣는 기능을 넣으면 됨
+                            makeTable(result.posts);
+                        }
+                    }
+                });
+                //setTimeout(function(){$('#post > tbody').empty();ajaxTable()},2000);
+            }
+            ajaxTable();
+        });
+    </script>
+</head>
+<body>
+<nav class="navbar">
+    <div id="mySidenav" class="sidenav">
+
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#">주</a>
+        <a href="#">식</a>
+        <a href="#">왕</a>
+        <a href="#">현승훈</a>
+      </div>
+    <div class="navbar_logo">
+        <a onclick="openNav()" class="navbar_logo">&#9776;</a><a href="" class="navbar_logo">개미는 뚠뚠</a>
+    </div>
+    <div class="navbar_login">
+        <a href="/auth/login" class="navbar_login">Login</a>
+        <a href="/interest" class="navbar_login">관심종목</a>
+    </div>
+</nav>
+
+    <table id='post'>       
+        <thead>
+            <th>최초 뉴스 발행시간</th>
+            <th>등락률</th>
+            <th>종목 이름/ 키워드</th>
+            <th>헤드라인</th>
+            <th>요약</th>
+            <th>요약</th>
+        </thead>
+        <tbody id='post_body'>
+            <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+            </tr>
+        </tbody>
+    </table>
+
+    </body>
+</html>

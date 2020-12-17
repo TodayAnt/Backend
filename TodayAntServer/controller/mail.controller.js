@@ -42,7 +42,7 @@ exports.sendGmail = (req,res,next) => {
     
     let mailParams = {
         toEmail : token.gmail,
-        subject  : 'Today Ant Test',
+        subject  : 'Today Ant - 설정하신 종목/키워드에 대한 새로운 소식입니다.',
         text : 'New information of __'
     };
     mailSender.send(mailParams); 

@@ -1,29 +1,28 @@
 <!doctype html>
 <html>
    <head>
-    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-    <script>
+      <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+      <script>
          $(document).ready(function(){
-
             $('#getMethod').click(function() {
                var get = 'GET METHOD CALL';
-                //Ajax GET Method TEST
-                $.ajax({
-                      url: '/api/posts',
-                      dataType: 'json',
-                      type: 'GET',
-                      data: {data:get},
-                      success: function(result) {
-                          console.log(result.posts);
-                          if (result) {
-                            $('#get_output').html(result.posts);
-                          }
+                  $.ajax({
+                        url: '/api/posts',
+                        dataType: 'json',
+                        type: 'GET',
+                        data: {data:get},
+                        success: function(result) {
+                           console.log(result.posts);
+                           if (result) {
+                              //테이블에 데이터 넣는 기능을 넣으면 됨
+                              $('#get_output').html(result.posts);
+                           }
                      }
                   });
             });
 
          });
- 
+
       </script>
       <style media="screen">
         div{

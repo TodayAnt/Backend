@@ -1,0 +1,41 @@
+<!doctype HTML>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="/css/login1.css">
+</head>
+<body>
+	<div class="main-container">
+		<div class="main-wrap">
+		<header>
+			<div class="sel-lang-wrap">
+				<select class="lang-select">
+					<option>한국어</option>
+					<option>English</option>
+				</select>
+			</div>
+			<div class="logo-wrap">
+				<h1><a href = "/">오개뚠</a></h1>
+			</div>
+		</header>
+		<section class="login-input-section-wrap">
+			<form action="/auth/login" method="POST">
+				<div class="login-input-wrap">	
+					<input name="email" placeholder="email" type="text"></input>
+				</div>
+				<div class="login-input-wrap password-wrap">	
+					<input name="password" placeholder="Password" type="password"></input>
+				</div>
+				<div class="login-button-wrap">
+					<input type="submit" value="Login">
+				</div>
+			</form>
+		</section>
+		<section class="Easy-sgin-in-wrap">
+			<ul class="sign-button-list">
+                <li><button><i class="fas fa-qrcode"></i><span><a href="/auth/regist">회원가입</a></span></button></li>
+			</ul>
+		</section>
+		</div>
+	</div>
+</body>

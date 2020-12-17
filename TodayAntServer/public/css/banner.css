@@ -1,0 +1,85 @@
+body{
+    margin: 0;
+}
+a{
+    text-decoration: none;
+    color: black;
+    text-align: left;
+    font-size:15px;
+    cursor:pointer;
+    margin-right: 20px; 
+}
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+}
+.navbar_logo {
+    padding: 19px;
+    font-size: 24px;
+    background-color: white;
+}
+
+
+table{
+    width:90%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+td,th{
+    color:rgb(87, 84, 84);
+    border: 1px solid lightgray;
+    text-align: center;
+    padding: 10px;
+}
+th{
+    background-color: lightgrey;
+}
+
+.sidenav { /*네비게이션 수직*/
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: lightgrey;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 50px;
+}
+
+.sidenav a { /*네비게이션 클릭 후 글씨 */
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+   
+}
+
+.sidenav a:hover {/*마우스클릭색*/
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {/*네비게이션 닫는표시 */
+    position: absolute;
+    top: 0;
+    right: 0px;
+    font-size: 25px;
+    margin-left: 50px;
+   
+}
+.navbar_login{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+
+}
+
