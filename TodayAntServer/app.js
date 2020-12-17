@@ -11,6 +11,7 @@ require('dotenv').config();
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var gauthRouter = require('./routes/gauth');
+var mailRouter = require('./routes/mail');
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/gauth', gauthRouter);
+app.use('/mail', mailRouter);
 passportConfig(passport);
 
 // catch 404 and forward to error handler
@@ -46,6 +48,7 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
+  console.log(err.message);
   // render the error page
   res.status(err.status || 500);
   res.render('error');

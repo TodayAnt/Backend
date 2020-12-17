@@ -2,18 +2,15 @@ const env = process.env;
 const { Sequelize, sequelize, Op, QueryTypes} = require('sequelize');
 const {Post, Interest, User} = require('../models');
 const model = require('../models');
-const jwt = require('jsonwebtoken');
+const jwt_util = require('../js/jwt_util');
 const JWT_SECRET = env.JWT_SECRET;
 
 exports.indexPage = (req, res, next) => {
     try 
     {    
-        const token = req.cookies.token;
+        let token = jwt_util.getAccount(req.cookies.token);
         if(token)
         {
-            const decode = jwt.verify(token, JWT_SECRET);
-
-            console.log(decode);
             Post.findAll({
                 where: { user_id : decode.uid }
             })

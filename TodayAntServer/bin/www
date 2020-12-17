@@ -8,6 +8,13 @@ var app = require('../app');
 var debug = require('debug')('followmeserver:server');
 var http = require('http');
 
+const path = require('path');
+const fs = require('fs');
+
+const options = {
+	key: fs.readFileSync(path.join(__dirname,'../keys/localhost_private.key')).toString(),
+	cert: fs.readFileSync(path.join(__dirname,'../keys/localhost.crt')).toString()
+};
 /**
  * Get port from environment and store in Express.
  */
@@ -19,7 +26,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = http.createServer(options, app);
 
 /**
  * Listen on provided port, on all network interfaces.
