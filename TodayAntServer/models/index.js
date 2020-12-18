@@ -23,8 +23,14 @@ db.Gauth = require('./gauth')(sequelize, Sequelize);
 db.Interest = require('./interest')(sequelize, Sequelize);
 db.Post = require('./post')(sequelize, Sequelize);
 db.Keyword = require('./keyword')(sequelize, Sequelize);
+db.Itemcode = require('./itemcode')(sequelize, Sequelize);
 
 // Model간 관계
+
+//Itemcodes - Itemcode alias 
+db.Itemcode.hasMany(db.Itemcode, { foreignKey: 'id'});
+db.Itemcode.belongsTo(db.Itemcode, { as:'itemcode', foreignKey: 'id'});
+
 //User-Gauth(N:1)     user_id-id
 db.User.hasOne(db.Gauth, { foreignKey: 'user_id', sourceKey: 'id'});
 db.Gauth.belongsTo(db.User, { foreignKey: 'user_id', sourceKey: 'id'});

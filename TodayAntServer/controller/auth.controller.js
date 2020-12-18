@@ -98,7 +98,7 @@ exports.login = (req, res, next) => {
 };
 
 exports.regist = async (req, res, next) => {
-    var {email,nickname,password,phone_num,gender} = req.body;
+    var {email,nickname,password,gender,gmail,gmail_check,phone_num} = req.body;
     if(req.cookies.token)
         res.redirect('/');
     await User.findOne({where:{ email:email }})
@@ -119,10 +119,7 @@ exports.regist = async (req, res, next) => {
                 gender:gender
             })
             .then(result=>{
-                res.json({
-                    code:200,
-                    message:"Join Success"
-                });
+                res.redirect('/auth/login')
             })
         }
         else

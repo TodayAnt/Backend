@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('keyword',{
+    return sequelize.define('itemcode',{
         id : {
             type : DataTypes.INTEGER,
             unique : true,
@@ -7,23 +7,21 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true
         },
 
-        interest_id : {
-            type : DataTypes.INTEGER,
-            allowNULL : false
-        },
-
-        name : {
+        item : {
             type : DataTypes.STRING(30),
             allowNULL : false
         },
 
+        code : {
+            type : DataTypes.STRING(15),
+            allowNULL : false
+        },
+
     },
-    
         {
             timestamps : true,
-           // paranoid : true,
+            //paranoid : true,
         }
-
     )
 
 };

@@ -8,7 +8,7 @@ const jwt_util = require('../js/jwt_util');
 exports.getPosts = async (req, res, next) => {
     try 
     {    
-        const token = jwt_util(req.cookies.token);
+        const token = jwt_util.getAccount(req.cookies.token);
         if(token)
         {
             const posts = await Post.findAll({
@@ -31,6 +31,7 @@ exports.getPosts = async (req, res, next) => {
     }
     catch(e) 
     {
+        console.log(e);
         res.status(401).json({code:401, message : 'jwt token err'});
     }
 }

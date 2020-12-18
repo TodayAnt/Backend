@@ -88,6 +88,19 @@ body{
 	color: white;
 	border: solid 1px var(--naver-green-border-color);
 }
+
+.join-button-wrap {
+	text-align: center;
+	padding-top: 13px;
+}
+.join-button-wrap button{
+	width: 465px;
+	height :48px;
+	font-size: 18px;
+	background: var(--naver-green-color);
+	color: white;
+	border: solid 1px var(--naver-green-border-color);
+}
 .login-stay-sign-in{
 	width: 465px;
 	height: 52px;

@@ -8,5 +8,7 @@ router.get('/data', interestController.getInterest);
 
 router.post('/', interestController.setInterest);
 
+router.post('/ok', interestController.interestOk);
+
 module.exports = router;
   
