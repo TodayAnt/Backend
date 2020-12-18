@@ -21,6 +21,8 @@ exports.registPage = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
+    if(req.cookies.token)
+        res.redirect('/');
     try{
         passport.authenticate('local', {session : false}, async (authError, user, info) => {
             if(authError)
@@ -97,7 +99,8 @@ exports.login = (req, res, next) => {
 
 exports.regist = async (req, res, next) => {
     var {email,nickname,password,phone_num,gender} = req.body;
-
+    if(req.cookies.token)
+        res.redirect('/');
     await User.findOne({where:{ email:email }})
 
     .then(async result=>{

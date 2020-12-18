@@ -19,7 +19,7 @@
 			</div>
 		</header>
 		<section class="login-input-section-wrap">
-			<form action="/auth/login" method="POST">
+			<form id="login" action="/auth/login" method="POST">
 				<div class="login-input-wrap">	
 					<input name="email" placeholder="email" type="text"></input>
 				</div>
@@ -27,7 +27,9 @@
 					<input name="password" placeholder="Password" type="password"></input>
 				</div>
 				<div class="login-button-wrap">
-					<input type="submit" value="Login">
+					<button type="button" id="btnlogin" onclick="document.getElementById('login').submit()"">
+                        <span>로그인</span>
+                    </button>
 				</div>
 			</form>
 		</section>

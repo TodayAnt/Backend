@@ -9,7 +9,7 @@ exports.indexPage = async (req, res, next) => {
     try 
     {    
         let token = jwt_util.getAccount(req.cookies.token);
-        console.log(token);
+        //console.log(token);
         if(token)
         {
             const posts = await Post.findAll({
@@ -21,11 +21,11 @@ exports.indexPage = async (req, res, next) => {
                 where: { user_id : token.uid }
             })
             
-            res.render('index', {"posts" : posts});
+            res.render('index', {"posts" : posts, 'login': 1});
         }   
         else
         {
-            res.render('index');
+            res.render('index', {'login':0});
         }
     }
     catch(e) 

@@ -47,7 +47,7 @@
                         }
                     }
                 });
-                //setTimeout(function(){$('#post > tbody').empty();ajaxTable()},2000);
+                setTimeout(function(){$('#post > tbody').empty();ajaxTable()},20000);
             }
             ajaxTable();
         });
@@ -66,9 +66,13 @@
     <div class="navbar_logo">
         <a onclick="openNav()" class="navbar_logo">&#9776;</a><a href="" class="navbar_logo">개미는 뚠뚠</a>
     </div>
+    
     <div class="navbar_login">
+        <% if(!login) { %>
         <a href="/auth/login" class="navbar_login">Login</a>
+        <% } else { %>
         <a href="/interest" class="navbar_login">관심종목</a>
+        <% }%>
     </div>
 </nav>
 

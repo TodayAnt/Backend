@@ -45,39 +45,43 @@ let mailSender = {
 
 exports.sendGmail = (req,res,next) => {
     let {user_id, interest_id, keyword_num} = req.body;
-    user_id=1, interest_id=1, keyword_num=1;
-    let query = `
-      SELECT email, gmail, gmail_check, item, :keyword as keyword, headline, summary, upload_time
-      FROM users as u, interests as i, posts as p
-      WHERE ( 
-        u.id = :user_id AND i.id = :interest_id 
-        AND u.id=i.user_id AND u.id=p.user_id AND i.id=p.interest_id 
-      )`;
+    try{
+      let query = `
+        SELECT email, gmail, gmail_check, item, :keyword as keyword, headline, summary, upload_time
+        FROM users as u, interests as i, posts as p
+        WHERE ( 
+          u.id = :user_id AND i.id = :interest_id 
+          AND u.id=i.user_id AND u.id=p.user_id AND i.id=p.interest_id 
+        )`;
 
-    model.sequelize.query(
-      query,
-      {
-          replacements: {
-            'keyword': 'keyword'+keyword_num,
-            'user_id': user_id,
-            'interest_id': interest_id
-          },
-          type: QueryTypes.SELECT
-      }
-    )
-    .then( posts => {
-      if(posts[0].gmail_check)
-      {
-        let mailParams = {
-          toEmail : posts[0].gmail,  
-          subject  : 'Today Ant - 설정하신 종목/키워드에 대한 새로운 소식입니다.',
-          text : `설정하신 관심 종목에 맞는 뉴스를 찾았습니다.`,
-          html : '<ul><li>Upload Time  :  '+ posts[0].upload_time + '</li><li> 관심 종목/키워드  :  ' + posts[0].item +'/'+posts[0].keyword + '</li><li>기사 제목  :  ' + posts[0].headline + '</li><li>요약 내용  :  ' + posts[0].summary
-        };
-        mailSender.send(mailParams);
-      }
-    })
-    .then( next => {
-      res.status(200).send({'message' : 'mail send success'});
-    })
+      model.sequelize.query(
+        query,
+        {
+            replacements: {
+              'keyword': 'keyword'+keyword_num,
+              'user_id': user_id,
+              'interest_id': interest_id
+            },
+            type: QueryTypes.SELECT
+        }
+      )
+      .then( posts => {
+        if(posts[0].gmail_check)
+        {
+          let mailParams = {
+            toEmail : posts[0].gmail,  
+            subject  : 'Today Ant - 설정하신 종목/키워드에 대한 새로운 소식입니다.',
+            text : `설정하신 관심 종목에 맞는 뉴스를 찾았습니다.`,
+            html : '<ul><li>Upload Time  :  '+ posts[0].upload_time + '</li><li> 관심 종목/키워드  :  ' + posts[0].item +'/'+posts[0].keyword + '</li><li>기사 제목  :  ' + posts[0].headline + '</li><li>요약 내용  :  ' + posts[0].summary
+          };
+          mailSender.send(mailParams);
+        }
+      })
+      .then( next => {
+        res.status(200).send({'message' : 'mail send success'});
+      })
+    } catch (e) {
+      console.log(e);
+      res.status(500).send({'message' : 'server error'});
+    }
 }
